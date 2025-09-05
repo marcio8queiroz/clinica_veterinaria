@@ -15,6 +15,15 @@ router.get("/", async(req, resp) => {
 
 });
 
+router.get("/:id", async (req, res) => {
+    const client = await Client.findById(req.params.id)
+
+    if(!client){
+        res.status(500).json({message: "O cliente com o id fornecido não foi encontrado"});
+    }
+    res.status(200).send(client);
+})
+
 router.post("/", async(req, res)=>{
     let client = new Client({
         nome: req.body.nome,
