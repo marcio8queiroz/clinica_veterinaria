@@ -4,7 +4,15 @@ const router = express.Router();
 const Client = require("../models/Client");
 
 router.get("/", async(req, resp) => {
-    resp.status(200).send("Chegou em clientes");
+   // resp.status(200).send("Chegou em clientes");
+
+   const clientList = await Client.find();
+
+   if(!clientList) {
+        resp.status(500).json({success: false});
+   }
+    resp.status(200).send(clientList);
+
 });
 
 router.post("/", async(req, res)=>{
