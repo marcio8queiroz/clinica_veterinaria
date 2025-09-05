@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
     const client = await Client.findById(req.params.id)
 
     if(!client){
-        res.status(500).json({message: "O cliente com o id fornecido não foi encontrado"});
+        res.status(404).json({message: "O cliente com o id fornecido não foi encontrado"});
     }
     res.status(200).send(client);
 })
@@ -37,6 +37,22 @@ router.post("/", async(req, res)=>{
 
     if(!client) return res.status(400).send("O cliente não pode ser salvo")
     res.send(client);
+    });
+
+    router.put("/:id", async(req, res) => {
+        const client = await Client.findByIdAndUpdate(req.params.id,
+            {
+                nome: req.body.nome,
+                email: req.body.celular,
+                endereco: req.body.endereco,
+                estado: req.body.estado,
+            },
+            {new: true}
+        );
+
+        if (!client) return res.status(404).send("O cliente não pode ser atualizado!");
+
+        res.send(client);
     })
 
 module.exports = router;
