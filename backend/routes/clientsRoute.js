@@ -50,9 +50,21 @@ router.post("/", async(req, res)=>{
             {new: true}
         );
 
-        if (!client) return res.status(404).send("O cliente não pode ser atualizado!");
+        if (!client) return res.status(400).send("O cliente não pode ser atualizado!");
 
         res.send(client);
-    })
+    });
+
+    router.delete("/:id", (req, res) => {
+        Client.findByIdAndDelete(req.params.id).then((client)=> {
+            if(client){
+                return res.status(200).json({success: true, message: "O cliente foi excluído!"});
+            } else{
+                return res.status(404.).json({success: false, message: "cliente não encontrado!"});
+            }
+        }).catch((err) => {
+            return res.status(500).json({success: false, error: err});
+        });
+    });
 
 module.exports = router;
