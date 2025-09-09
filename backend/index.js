@@ -25,8 +25,10 @@ app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
 const clientsRoutes = require("./routes/clientsRoute")
+const petsRoutes = require("./routes/petsRoute")
 const api = process.env.API_URL || "/api/v1";
 app.use(`${api}/clients`, clientsRoutes);
+app.use(`${api}/pets`, petsRoutes);
 
 
 app.listen(5000, () => {

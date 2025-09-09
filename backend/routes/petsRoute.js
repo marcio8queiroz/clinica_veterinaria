@@ -22,7 +22,7 @@ router.post("/", async (req, res)=> {
         pai: req.body.pai,
         mae: req.body.mae,
         observacoes: req.body.observacoes,
-        client,Client,
+        client,
     });
     pet = await pet.save();
 
