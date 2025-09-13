@@ -6,6 +6,26 @@ const mongoose = require("mongoose");
 const Client = require("../models/Client");
 const Pet = require("../models/Pet");
 
+router.get('/', async(req, res) => {
+    const petList = await Pet.find().populate("client");
+
+    if(!petList){
+        res.status(500).json({success: false});
+    }
+        res.status(200).send(petList);
+}); 
+
+router.get("/:id", async(req, res)=>{
+    const pet = await Pet.findById(req.params.id).populate("client");
+
+    if(!pet){
+        res.status(404).json({message: "o animal de estimação com o ID fornecido não foi encontrado."})
+    }
+
+    res.status(200.).send(pet);
+})
+    
+
 router.post("/", async (req, res)=> {
     const client = await Client.findById(req.body.client);
     if(!client) return res.status(404).send("Cliente inválido");
