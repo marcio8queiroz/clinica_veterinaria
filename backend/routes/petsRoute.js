@@ -77,6 +77,18 @@ router.put("/:id", async (req, res) => {
     if(!pet) return res.status(400).send("o pet não pode ser atualizado!");
 
     res.send(pet);
-})
+});
+
+router.delete("/:id", (req, res)=> {
+    Pet.findByIdAndDelete(req.params.id).then((pet)=> {
+        if(pet){
+            return res.status(200).json({success: true, message: "o pet foi deletado!"});
+        }else {
+            return res.status(404).json({success: false, message: "pet não encontrado!"});
+        }
+    }).catch((err)=> {
+        return res.status(500).json({success: false, error : err});
+    });
+        });
 
 module.exports = router;
