@@ -24,15 +24,17 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
-const clientsRoutes = require("./routes/clientsRoute")
+const clientsRoutes = require("./routes/clientsRoute");
 const petsRoutes = require("./routes/petsRoute");
 const vetsRoutes = require("./routes/vetsRoutes");
 const proceduresRoutes = require("./routes/proceduresRoutes");
-const api = process.env.API_URL || "/api/v1";
+const consultationsRoutes = require("./routes/consultationRoutes");
+//const api = process.env.API_URL || "/api/v1";
 app.use(`${api}/clients`, clientsRoutes);
 app.use(`${api}/pets`, petsRoutes);
 app.use(`${api}/vets`, vetsRoutes);
 app.use(`${api}/procedures`, proceduresRoutes);
+app.use(`${api}/consultations`, consultationsRoutes);
 
 
 app.listen(5000, () => {
