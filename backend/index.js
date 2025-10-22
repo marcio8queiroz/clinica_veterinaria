@@ -29,7 +29,7 @@ const petsRoutes = require("./routes/petsRoute");
 const vetsRoutes = require("./routes/vetsRoutes");
 const proceduresRoutes = require("./routes/proceduresRoutes");
 const consultationsRoutes = require("./routes/consultationRoutes");
-//const api = process.env.API_URL || "/api/v1";
+const api = process.env.API_URL || "/api/v1";
 app.use(`${api}/clients`, clientsRoutes);
 app.use(`${api}/pets`, petsRoutes);
 app.use(`${api}/vets`, vetsRoutes);
