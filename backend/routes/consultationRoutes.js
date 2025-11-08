@@ -6,6 +6,30 @@ const Pet = require("../models/Pet");
 const Vet = require("../models/Vet");
 const Procedure = require("../models/Procedure");
 
+router.get('/', async(req, res) => {
+    const consultationList = await Consultation.find().populate("procedures")
+    .populate("procedures")
+    .populate("pet")
+    .populate("vet");
+
+    if(!consultationList){
+        res.status(500).json({success: false});
+    }
+    res.status(200).send(consultationList);
+});
+
+router.get("/:id", async(req, res)=>{
+    const consultation = await Consultation.findById(req.params.id)
+    .populate("procedures")
+    .populate("pet")
+    .populate("vet");
+
+    if(!consultation){
+        res.status(404).json({message: "A consulta com o ID informado não foi encontrada"});
+    }
+    res.status(200).send(consultation);
+})
+
 router.post("/", async(req, res)=> {
     const pet = await Pet.findById(req.body.pet);
     const vet = await Vet.findById(req.body.vet);
