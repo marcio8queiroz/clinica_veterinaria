@@ -30,6 +30,8 @@ router.get("/:id", async(req, res)=>{
     res.status(200).send(consultation);
 })
 
+
+
 router.post("/", async(req, res)=> {
     const pet = await Pet.findById(req.body.pet);
     const vet = await Vet.findById(req.body.vet);
@@ -58,6 +60,18 @@ router.post("/", async(req, res)=> {
         return res.status(400).send("A consulta não pode ser criada!")
 
     res.send(consultation);
+})
+
+router.delete("/:id", (req, res)=> {
+    Consultation.findByIdAndDelete(req.params.id).then((consultation)=> {
+        if(consultation){
+            return res.status(200).json({success: true, message: "a consulta foi excluída" });
+        } else{
+            return res.status(404).json({success: false, message: "Consulta não encontrada!"});
+        }
+    }).catch((err)=>{
+        return res.status(500).json({success: false, error: err});
+    });
 })
 
 module.exports = router;
